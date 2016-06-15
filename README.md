@@ -1,4 +1,4 @@
-# CST363ClassProject
+# CST363 Class Project
 Database Systems Class project
 In this project, you are to apply what we have learned to design and implement a database system for an organization/company of your choice, it could be a library, restaurant, car repair shop, pet clinic etc. In the first part of the project, you are required to:
 
