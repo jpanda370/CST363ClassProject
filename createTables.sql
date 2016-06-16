@@ -1,7 +1,7 @@
 set echo on
 set heading on
 
-spool C:\Users\Michael\Documents\CSIT\CST363\FinalProject\createTables.txt
+spool createTables.txt
 
 drop table Registration;
 drop table Plate;

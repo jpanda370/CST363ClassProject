@@ -1,0 +1,108 @@
+SQL> 
+SQL> drop table Registration;
+
+Table dropped.
+
+SQL> drop table Plate;
+
+Table dropped.
+
+SQL> drop table Vehicle;
+
+Table dropped.
+
+SQL> drop table Model;
+
+Table dropped.
+
+SQL> drop table Make;
+
+Table dropped.
+
+SQL> 
+SQL> create table Make(make_name char(30), make_origin char(30), PRIMARY KEY (make_name));
+
+Table created.
+
+SQL> create table Model(model_name char(30), model_year char(4), make_name char(30), CONSTRAINT fk_make_name FOREIGN KEY (make_name) REFERENCES Make(make_name), PRIMARY KEY(model_name, model_year));
+
+Table created.
+
+SQL> create table Vehicle(vin char(50), color char(3), model_name char(30), model_year char(4), CONSTRAINT fk_model_name_year FOREIGN KEY (model_name, model_year) REFERENCES Model(model_name, model_year), PRIMARY KEY(vin));
+
+Table created.
+
+SQL> create table Plate(state char(2), plate char(7), vin char(50), CONSTRAINT fk_vin FOREIGN KEY (vin) REFERENCES Vehicle(vin), PRIMARY KEY(plate));
+
+Table created.
+
+SQL> create table Registration(from_date date, to_date date, owner char(50), vin char(50), CONSTRAINT fk_vin2 FOREIGN KEY (vin) REFERENCES Vehicle(vin), plate char(7), CONSTRAINT fk_plate2 FOREIGN KEY (plate) REFERENCES Plate(plate), PRIMARY KEY(from_date, to_date, vin, plate));
+
+Table created.
+
+SQL> 
+SQL> insert into Make values('Toyota', 'Japan');
+
+1 row created.
+
+SQL> insert into Make values('Tesla', 'USA');
+
+1 row created.
+
+SQL> insert into Make values('BMW', 'Germany');
+
+1 row created.
+
+SQL> insert into Make values('Chevy', 'USA');
+
+1 row created.
+
+SQL> insert into Make values('Ford', 'USA');
+
+1 row created.
+
+SQL> 
+SQL> insert into Model values('Camry', '2016', 'Toyota');
+
+1 row created.
+
+SQL> insert into Model values('Camry', '2015', 'Toyota');
+
+1 row created.
+
+SQL> insert into Model values('Corola', '2015', 'Toyota');
+
+1 row created.
+
+SQL> insert into Model values('i3', '2016', 'BMW');
+
+1 row created.
+
+SQL> insert into Model values('i8', '2016', 'BMW');
+
+1 row created.
+
+SQL> insert into Model values('F-150', '2016', 'Ford');
+
+1 row created.
+
+SQL> insert into Model values('Tahoe', '2015', 'Chevy');
+
+1 row created.
+
+SQL> 
+SQL> insert into Vehicle values('7812LJSKLDJF982789JF', 'RED', 'Camry', '2016');
+
+1 row created.
+
+SQL> insert into Plate values('CA', '7DJW931', '7812LJSKLDJF982789JF');
+
+1 row created.
+
+SQL> insert into Registration values('20-JUN-2016', '20-JUN-2016', 'Chris Johnson', '7812LJSKLDJF982789JF', '7DJW931');
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> spool off
