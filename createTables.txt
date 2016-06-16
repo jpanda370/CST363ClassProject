@@ -1,108 +1,76 @@
 SQL> 
-SQL> drop table Registration;
+SQL> DROP TABLE Registration;
 
 Table dropped.
 
-SQL> drop table Plate;
+SQL> DROP TABLE Plate;
 
 Table dropped.
 
-SQL> drop table Vehicle;
+SQL> DROP TABLE Vehicle;
 
 Table dropped.
 
-SQL> drop table Model;
+SQL> DROP TABLE Model;
 
 Table dropped.
 
-SQL> drop table Make;
+SQL> DROP TABLE Make;
 
 Table dropped.
 
 SQL> 
-SQL> create table Make(make_name char(30), make_origin char(30), PRIMARY KEY (make_name));
-
-Table created.
-
-SQL> create table Model(model_name char(30), model_year char(4), make_name char(30), CONSTRAINT fk_make_name FOREIGN KEY (make_name) REFERENCES Make(make_name), PRIMARY KEY(model_name, model_year));
-
-Table created.
-
-SQL> create table Vehicle(vin char(50), color char(3), model_name char(30), model_year char(4), CONSTRAINT fk_model_name_year FOREIGN KEY (model_name, model_year) REFERENCES Model(model_name, model_year), PRIMARY KEY(vin));
-
-Table created.
-
-SQL> create table Plate(state char(2), plate char(7), vin char(50), CONSTRAINT fk_vin FOREIGN KEY (vin) REFERENCES Vehicle(vin), PRIMARY KEY(plate));
-
-Table created.
-
-SQL> create table Registration(from_date date, to_date date, owner char(50), vin char(50), CONSTRAINT fk_vin2 FOREIGN KEY (vin) REFERENCES Vehicle(vin), plate char(7), CONSTRAINT fk_plate2 FOREIGN KEY (plate) REFERENCES Plate(plate), PRIMARY KEY(from_date, to_date, vin, plate));
+SQL> CREATE TABLE Make(
+  2  	 make_name char(30),
+  3  	 make_origin char(30),
+  4  	 PRIMARY KEY (make_name));
 
 Table created.
 
 SQL> 
-SQL> insert into Make values('Toyota', 'Japan');
+SQL> CREATE TABLE Model(
+  2  	 model_name char(30),
+  3  	 model_year char(4),
+  4  	 make_name char(30),
+  5  	 CONSTRAINT fk_make_name FOREIGN KEY (make_name) REFERENCES Make(make_name),
+  6  	 PRIMARY KEY(model_name, model_year));
 
-1 row created.
-
-SQL> insert into Make values('Tesla', 'USA');
-
-1 row created.
-
-SQL> insert into Make values('BMW', 'Germany');
-
-1 row created.
-
-SQL> insert into Make values('Chevy', 'USA');
-
-1 row created.
-
-SQL> insert into Make values('Ford', 'USA');
-
-1 row created.
+Table created.
 
 SQL> 
-SQL> insert into Model values('Camry', '2016', 'Toyota');
+SQL> CREATE TABLE Vehicle(
+  2  	 vin char(50),
+  3  	 color char(3),
+  4  	 model_name char(30),
+  5  	 model_year char(4),
+  6  	 milage number(10),
+  7  	 CONSTRAINT fk_model_name_year FOREIGN KEY (model_name, model_year) REFERENCES Model(model_name, model_year),
+  8  	 PRIMARY KEY(vin));
 
-1 row created.
-
-SQL> insert into Model values('Camry', '2015', 'Toyota');
-
-1 row created.
-
-SQL> insert into Model values('Corola', '2015', 'Toyota');
-
-1 row created.
-
-SQL> insert into Model values('i3', '2016', 'BMW');
-
-1 row created.
-
-SQL> insert into Model values('i8', '2016', 'BMW');
-
-1 row created.
-
-SQL> insert into Model values('F-150', '2016', 'Ford');
-
-1 row created.
-
-SQL> insert into Model values('Tahoe', '2015', 'Chevy');
-
-1 row created.
+Table created.
 
 SQL> 
-SQL> insert into Vehicle values('7812LJSKLDJF982789JF', 'RED', 'Camry', '2016');
+SQL> CREATE TABLE Plate(
+  2  	 state char(2),
+  3  	 plate char(7),
+  4  	 vin char(50),
+  5  	 CONSTRAINT fk_vin FOREIGN KEY (vin) REFERENCES Vehicle(vin),
+  6  	 PRIMARY KEY(plate));
 
-1 row created.
-
-SQL> insert into Plate values('CA', '7DJW931', '7812LJSKLDJF982789JF');
-
-1 row created.
-
-SQL> insert into Registration values('20-JUN-2016', '20-JUN-2016', 'Chris Johnson', '7812LJSKLDJF982789JF', '7DJW931');
-
-1 row created.
+Table created.
 
 SQL> 
+SQL> CREATE TABLE Registration(
+  2  	 from_date date,
+  3  	 to_date date,
+  4  	 owner char(50),
+  5  	 vin char(50),
+  6  	 CONSTRAINT fk_vin2 FOREIGN KEY (vin) REFERENCES Vehicle(vin),
+  7  	 plate char(7),
+  8  	 CONSTRAINT fk_plate2 FOREIGN KEY (plate) REFERENCES Plate(plate),
+  9  	 PRIMARY KEY(from_date, to_date, vin, plate));
+
+Table created.
+
 SQL> 
 SQL> spool off
