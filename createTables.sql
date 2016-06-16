@@ -26,7 +26,7 @@ CREATE TABLE Vehicle(
     color char(3), 
     model_name char(30), 
     model_year char(4), 
-    milage number(10), 
+    mileage number(10), 
     CONSTRAINT fk_model_name_year FOREIGN KEY (model_name, model_year) REFERENCES Model(model_name, model_year), 
     PRIMARY KEY(vin));
 
